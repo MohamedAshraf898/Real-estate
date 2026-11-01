@@ -305,7 +305,7 @@
     document.title = `${name(p)} | ${B.name}`;
     $('#crumb').textContent = name(p);
     $('#p-eyebrow').textContent = subtitle(p);
-    $('#p-title').textContent = name(p);
+    $('#p-title').innerHTML = `${esc(p.title)} · <span class="nowrap">${p.id.toUpperCase()}</span>`;
     $('#p-status').className = 'badge ' + statusCls(p.status); $('#p-status').textContent = p.status;
     $('#p-price').textContent = p.status === 'Sold' ? 'Sold' : eur(p.price);
     $('#p-ppm').textContent = `€${Math.round(p.price / p.area).toLocaleString('en-US')} per m² · VAT included`;

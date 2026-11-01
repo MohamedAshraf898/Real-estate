@@ -82,7 +82,7 @@
     gsap.set(items, { opacity: 0, y: 48 });
     ScrollTrigger.batch(items, {
       start: 'top 88%', once: true,
-      onEnter: b => { b.forEach(e => e.classList.add('is-in')); gsap.to(b, { opacity: 1, y: 0, duration: 1.1, ease, stagger: 0.12, overwrite: true }); },
+      onEnter: b => { b.forEach(e => e.classList.add('is-in')); gsap.to(b, { opacity: 1, y: 0, duration: 1.1, ease, stagger: 0.12, overwrite: 'auto' }); },
     });
     list.filter(e => e.classList.contains('reveal-img')).forEach(box => {
       const img = box.querySelector('img');

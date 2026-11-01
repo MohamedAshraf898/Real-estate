@@ -523,3 +523,20 @@ html.has-cursor, html.has-cursor a, html.has-cursor button, html.has-cursor labe
 /* ---------- footer wordmark ---------- */
 .footer-mark { margin-top: var(--space-12); font: 300 clamp(5rem, 1rem + 19vw, 22rem)/.8 var(--font-heading); letter-spacing: -0.02em; text-transform: uppercase; color: rgba(244, 240, 219, .08); white-space: nowrap; overflow: hidden; text-align: center; user-select: none; }
 .card, .type { transform-style: preserve-3d; will-change: transform; }
+
+/* ---------- phone layout fixes ---------- */
+.nowrap { white-space: nowrap; }
+.b3d__tip[hidden] { display: none; }
+.office h2, .office h3 { color: var(--cream-100); }
+.toast { visibility: hidden; transform: translate(-50%, calc(100% + var(--space-8))); transition: transform .35s, visibility 0s .35s; }
+.toast.is-on { visibility: visible; transition: transform .35s; }
+@media (max-width: 1099px) { .has-sticky-bar { padding-bottom: 84px; } }
+@media (max-width: 699px) {
+  #p-title { font-size: clamp(1.75rem, 7.4vw, 2.25rem); }
+  .toolbar { gap: var(--space-3); }
+  .toolbar__right { flex: 1 1 100%; min-width: 0; flex-wrap: nowrap; }
+  .toolbar .view-toggle { display: none; }
+  .tabs { margin-inline: calc(-1 * var(--space-4)); padding-inline: var(--space-4); gap: var(--space-5); -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent); mask-image: linear-gradient(90deg, #000 85%, transparent); }
+  .tabs button:last-child { margin-right: var(--space-8); }
+  .types { gap: var(--space-3); }
+}
