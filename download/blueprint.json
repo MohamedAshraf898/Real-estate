@@ -1,0 +1,11 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "landingPage": "/",
+  "preferredVersions": { "php": "8.2", "wp": "latest" },
+  "login": true,
+  "steps": [
+    { "step": "setSiteOptions", "options": { "blogname": "Linden Residences", "blogdescription": "New homes in New Belgrade", "permalink_structure": "/%postname%/" } },
+    { "step": "installTheme", "themeData": { "resource": "url", "url": "https://mohamedashraf898.github.io/Real-estate/download/linden-residences-theme.zip" }, "options": { "activate": true } },
+    { "step": "runPHP", "code": "<?php require '/wordpress/wp-load.php'; do_action( 'after_switch_theme', 'linden-residences' ); flush_rewrite_rules();" }
+  ]
+}
