@@ -23,7 +23,7 @@
     const words = splitWords(hero.querySelector('h1'));
     if (reduce) return;
     tl.from(hero.querySelector('.hero__media img'), { scale: 1.25, duration: 2.2, ease: 'power2.out' }, 0)
-      .from('.site-header__bar', { y: -90, opacity: 0, duration: 1 }, 0.2)
+      .from('.site-header__bar', { y: -90, opacity: 0, duration: 1, clearProps: 'transform,opacity' }, 0.2)
       .from(hero.querySelector('.eyebrow'), { y: 20, opacity: 0, duration: .8 }, 0.35)
       .from(words, { yPercent: 115, duration: 1.1, stagger: 0.07 }, 0.4)
       .from(hero.querySelectorAll('.lead, .scroll-cue'), { y: 40, opacity: 0, duration: 1, stagger: 0.12 }, 0.9);
@@ -50,7 +50,7 @@
     };
     show();
     gsap.timeline({ defaults: { ease } })
-      .from('.site-header__bar', { y: -90, opacity: 0, duration: 1 }, 0.1)
+      .from('.site-header__bar', { y: -90, opacity: 0, duration: 1, clearProps: 'transform,opacity' }, 0.1)
       .from(chars, { yPercent: 110, duration: 1.2, stagger: { each: 0.045, from: 'center' } }, 0.25)
       .from(hero.querySelectorAll('.hero__tag span'), { y: 16, opacity: 0, duration: .8, stagger: .1 }, 0.9)
       .from(leaves, { yPercent: 100, duration: 1.6, ease: 'power3.out' }, 0.6);
@@ -135,8 +135,21 @@
     if (footer) gsap.from(footer.querySelectorAll('.footer-top > *'), { y: 40, opacity: 0, duration: 1, ease, stagger: .1, scrollTrigger: { trigger: footer, start: 'top 90%', once: true } });
   }
 
+
+  // Full-screen menu: panel drops in, links rise one by one.
+  function menu(el, open) {
+    gsap.killTweensOf(el);
+    if (reduce) { gsap.set(el, { clipPath: open ? 'inset(0 0 0% 0)' : 'inset(0 0 100% 0)' }); return; }
+    if (open) {
+      gsap.timeline()
+        .fromTo(el, { clipPath: 'inset(0 0 100% 0)' }, { clipPath: 'inset(0 0 0% 0)', duration: .8, ease: 'power4.inOut' })
+        .from(el.querySelectorAll('.mm__nav a'), { yPercent: 60, opacity: 0, duration: .8, stagger: .07, ease, clearProps: 'all' }, '-=0.35')
+        .from(el.querySelectorAll('.mm__side > *'), { y: 30, opacity: 0, duration: .7, stagger: .08, ease, clearProps: 'all' }, '-=0.6');
+    } else gsap.to(el, { clipPath: 'inset(0 0 100% 0)', duration: .6, ease: 'power4.inOut' });
+  }
+
   window.Motion = {
-    loader, reveal, reduce,
+    loader, reveal, reduce, menu,
     start() { if (!document.querySelector('.loader')) heroIntro(); headings(); counters(); magnetic(); extras(); },
   };
 })();

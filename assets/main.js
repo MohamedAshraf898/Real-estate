@@ -47,11 +47,17 @@
       <a class="btn btn--primary btn--sm" href="contact.html">Inquire ${icon('arrow')}</a>
     </div>
   </div></div></header>
-  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
-    <div><div class="mobile-menu__top"><a class="logo" href="index.html">${LOGO}<span>${B.name}</span></a>
-      <button class="icon-btn menu-close" type="button" aria-label="Close menu" style="background:transparent;color:inherit;border-color:rgba(244,240,219,.35)">${icon('close')}</button></div>
-      <nav aria-label="Mobile">${NAV.map(([h, l]) => `<a href="${h}">${l}${icon('arrow')}</a>`).join('')}</nav></div>
-    <div class="stack"><a class="btn btn--primary btn--block" href="contact.html">Book a viewing ${icon('arrow')}</a><p class="muted" style="color:var(--sand-400)">Sales office · ${B.phone}</p></div>
+  <div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Site menu" aria-hidden="true">
+    <div class="mm__top"><a class="logo" href="index.html">${LOGO}<span>${B.name}</span></a>
+      <button class="mm__close menu-close" type="button" aria-label="Close menu">${icon('close')}<span>Close</span></button></div>
+    <div class="mm__body">
+      <nav class="mm__nav" aria-label="Pages">${NAV.map(([h, l, k], i) => `<a href="${h}" ${k === page ? 'aria-current="page"' : ''}><small>0${i + 1}</small><span>${l}</span>${icon('arrow')}</a>`).join('')}</nav>
+      <aside class="mm__side">
+        <div class="mm__img"><img data-img="facade:900" alt="" loading="lazy"></div>
+        <div class="mm__info"><span class="eyebrow">Sales office</span><p>${B.address}</p><p><a href="tel:${B.phone.replace(/\s/g, '')}">${B.phone}</a><br><a href="mailto:${B.email}">${B.email}</a></p></div>
+        <a class="btn btn--primary btn--block" href="contact.html">Book a viewing ${icon('arrow')}</a>
+      </aside>
+    </div>
   </div>`;
   const footer = `
   <footer class="site-footer"><div class="wrap">
@@ -101,16 +107,31 @@
     requestAnimationFrame(tick);
   } else document.documentElement.classList.add('loaded');
 
-  // header hide on scroll down
-  let lastY = 0; const hdr = $('.site-header');
-  addEventListener('scroll', () => { const y = scrollY; hdr.classList.toggle('is-hidden', y > lastY && y > 240); lastY = y; }, { passive: true });
 
   // mobile menu
   const mm = $('#mobile-menu'), mb = $('.menu-btn');
-  const setMenu = open => { mm.classList.toggle('is-open', open); mm.setAttribute('aria-hidden', !open); mb.setAttribute('aria-expanded', open); document.body.style.overflow = open ? 'hidden' : ''; if (open) $('.menu-close').focus(); };
+  const setMenu = open => {
+    if (open === mm.classList.contains('is-open')) return;
+    mm.classList.toggle('is-open', open); mm.setAttribute('aria-hidden', !open); mb.setAttribute('aria-expanded', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+    if (window.Motion) window.Motion.menu(mm, open);
+    if (open) setTimeout(() => $('.menu-close').focus(), 50); else mb.focus();
+  };
   mb.addEventListener('click', () => setMenu(true));
-  $('.menu-close').addEventListener('click', () => { setMenu(false); mb.focus(); });
-  addEventListener('keydown', e => { if (e.key === 'Escape' && mm.classList.contains('is-open')) { setMenu(false); mb.focus(); } });
+  $('.menu-close').addEventListener('click', () => setMenu(false));
+  $$('.mm__nav a', mm).forEach(a => a.addEventListener('click', () => { document.body.style.overflow = ''; }));
+  addEventListener('keydown', e => {
+    if (!mm.classList.contains('is-open')) return;
+    if (e.key === 'Escape') setMenu(false);
+    if (e.key === 'Tab') { // keep focus inside the open menu
+      const f = $$('a, button', mm), first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+  // header hide on scroll down
+  let lastY = 0; const hdr = $('.site-header');
+  addEventListener('scroll', () => { const y = scrollY; hdr.classList.toggle('is-hidden', y > lastY && y > 240 && !mm.classList.contains('is-open')); hdr.classList.toggle('is-scrolled', y > 40); lastY = y; }, { passive: true });
 
   // toast
   const toast = msg => { const t = $('.toast'); t.textContent = msg; t.classList.add('is-on'); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('is-on'), 2600); };
