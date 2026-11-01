@@ -17,7 +17,7 @@ import zipfile
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC_PHP = os.path.join(ROOT, 'wordpress-theme')
 DIST = os.path.join(ROOT, 'dist', 'linden-residences')
-ASSETS = ['tokens.css', 'site.css', 'main.js', 'data.js', 'motion.js', 'motion-plus.js', 'building3d.js', 'favicon.svg']
+ASSETS = ['tokens.css', 'site.css', 'main.js', 'data.js', 'motion.js', 'motion-plus.js', 'building3d.js', 'world3d.js', 'explore3d.js', 'favicon.svg']
 PAGES = {  # html file -> (output, page key, template name)
     'index.html': ('front-page.php', 'home', None),
     'properties.html': ('templates/properties.php', 'properties', 'Properties'),
@@ -25,8 +25,9 @@ PAGES = {  # html file -> (output, page key, template name)
     'project.html': ('templates/project.php', 'project', 'The Project'),
     'location.html': ('templates/location.php', 'location', 'Location'),
     'contact.html': ('templates/contact.php', 'contact', 'Contact'),
+    'explore.html': ('templates/explore.php', 'explore', '3D Experience'),
 }
-KEYS = {'index': 'home', 'properties': 'properties', 'property': 'property', 'project': 'project', 'location': 'location', 'contact': 'contact'}
+KEYS = {'index': 'home', 'properties': 'properties', 'property': 'property', 'project': 'project', 'location': 'location', 'contact': 'contact', 'explore': 'explore'}
 
 
 def php_link(m):
@@ -39,7 +40,7 @@ def template(html_name):
     out, key, name = PAGES[html_name]
     html = open(os.path.join(ROOT, html_name), encoding='utf-8').read()
     body = html[html.index('>', html.index('<body')) + 1: html.index('<script', html.index('<body'))].strip('\n')
-    body = re.sub(r'href="(index|properties|property|project|location|contact)\.html(\?[^"#]*)?(#[^"]*)?"', php_link, body)
+    body = re.sub(r'href="(index|properties|property|project|location|contact|explore)\.html(\?[^"#]*)?(#[^"]*)?"', php_link, body)
     # Hero title and contact details come from WordPress.
     body = body.replace('<h1 class="hero__title"><span class="hero__line">Linden</span> <span class="hero__line">Residences</span></h1>',
                         '<h1 class="hero__title"><?php echo implode( " ", array_map( function ( $w ) { return \'<span class="hero__line">\' . esc_html( $w ) . \'</span>\'; }, explode( " ", get_bloginfo( "name" ) ) ) ); ?></h1>')

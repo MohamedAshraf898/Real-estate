@@ -6,7 +6,7 @@
  */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-define( 'LINDEN_VER', '1.0.0' );
+define( 'LINDEN_VER', '1.1.0' );
 
 require get_theme_file_path( 'inc/properties.php' );
 require get_theme_file_path( 'inc/customizer.php' );
@@ -27,6 +27,7 @@ function linden_templates() {
 		'project'    => 'templates/project.php',
 		'location'   => 'templates/location.php',
 		'contact'    => 'templates/contact.php',
+		'explore'    => 'templates/explore.php',
 	);
 }
 
@@ -92,10 +93,13 @@ function linden_inline_data() {
 	return $js;
 }
 
-/** Three.js and the 3D building only on the home page. */
+/** Three.js only where there is a 3D model: the home page teaser and the 3D Experience page. */
+function linden_has_3d() {
+	return is_front_page() || is_page_template( 'templates/explore.php' );
+}
 add_action( 'wp_head', function () {
-	if ( is_front_page() ) {
-		echo '<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>' . "\n";
+	if ( linden_has_3d() ) {
+		echo '<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>' . "\n";
 	}
 	if ( ! defined( 'WPSEO_VERSION' ) && ! defined( 'RANK_MATH_VERSION' ) ) {
 		$desc = get_bloginfo( 'description' );
@@ -108,7 +112,8 @@ add_action( 'wp_head', function () {
 	}
 }, 1 );
 add_action( 'wp_footer', function () {
-	if ( is_front_page() ) {
-		echo '<script type="module" src="' . esc_url( get_theme_file_uri( 'assets/building3d.js' ) . '?ver=' . LINDEN_VER ) . '"></script>' . "\n";
+	if ( linden_has_3d() ) {
+		$file = is_front_page() ? 'assets/building3d.js' : 'assets/explore3d.js';
+		echo '<script type="module" src="' . esc_url( get_theme_file_uri( $file ) . '?ver=' . LINDEN_VER ) . '"></script>' . "\n";
 	}
 }, 30 );

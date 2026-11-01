@@ -48,7 +48,7 @@
     if (reduce) return;
 
     // ---------- custom cursor ----------
-    if (fine) {
+    if (fine && document.body.dataset.page !== 'explore') { // the 3D page keeps the normal cursor for dragging
       const c = document.createElement('div'); c.className = 'cursor'; c.innerHTML = '<span class="cursor__ring"><b></b></span><span class="cursor__dot"></span>';
       document.body.appendChild(c); document.documentElement.classList.add('has-cursor');
       const ring = c.querySelector('.cursor__ring'), dot = c.querySelector('.cursor__dot'), label = c.querySelector('b');

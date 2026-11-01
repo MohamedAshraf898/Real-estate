@@ -8,7 +8,7 @@
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
   // Page addresses: the static site uses .html files; the WordPress theme passes window.SITE_URLS.
-  const U = Object.assign({ home: 'index.html', properties: 'properties.html', property: 'property.html', project: 'project.html', location: 'location.html', contact: 'contact.html' }, window.SITE_URLS || {});
+  const U = Object.assign({ home: 'index.html', properties: 'properties.html', property: 'property.html', project: 'project.html', location: 'location.html', contact: 'contact.html', explore: 'explore.html' }, window.SITE_URLS || {});
   const url = (k, q) => U[k] + (q ? (U[k].indexOf('?') > -1 ? '&' : '?') + q : '');
   window.siteUrl = url;
   // Photo source: a key from IMG (demo photos) or a full URL (WordPress media).
@@ -43,7 +43,7 @@
   const saveFavs = () => { try { localStorage.setItem(FKEY, JSON.stringify([...favs])); } catch (e) {} $$('.fav-count').forEach(el => { el.textContent = favs.size; el.hidden = !favs.size; }); };
 
   // ---------- header / footer ----------
-  const NAV = [[url('home'), 'Home', 'home'], [url('properties'), 'Properties', 'properties'], [url('project'), 'The Project', 'project'], [url('location'), 'Location', 'location'], [url('contact'), 'Contact', 'contact']];
+  const NAV = [[url('home'), 'Home', 'home'], [url('explore'), '3D Experience', 'explore'], [url('properties'), 'Properties', 'properties'], [url('project'), 'The Project', 'project'], [url('location'), 'Location', 'location'], [url('contact'), 'Contact', 'contact']];
   const header = `
   <header class="site-header" id="top"><div class="wrap"><div class="site-header__bar">
     <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">${icon('menu')}<span class="menu-label">Menu</span></button>
@@ -143,6 +143,7 @@
 
   // toast
   const toast = msg => { const t = $('.toast'); t.textContent = msg; t.classList.add('is-on'); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('is-on'), 2600); };
+  window.toast = toast;
 
   // reveal on scroll
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
@@ -217,6 +218,12 @@
   $$('[data-icon]').forEach(el => { el.insertAdjacentHTML('afterbegin', icon(el.dataset.icon)); });
 
   // ---------- page: home ----------
+  // contact: arriving from a unit in the 3D experience
+  if (page === 'contact') {
+    const unit = new URLSearchParams(location.search).get('unit'), msg = $('#c-msg');
+    if (unit && msg && !msg.value) msg.value = `I'm interested in unit ${unit}. Please send me the price list and floor plan.`;
+  }
+
   if (page === 'home') {
     renderCards($('#featured'), PROPS.filter(p => p.status !== 'Sold' && p.type !== 'Office' && p.type !== 'Retail').slice(0, 3));
     $('#hero-search').addEventListener('submit', e => {
@@ -320,6 +327,7 @@
     $('#keyfacts').innerHTML = kf.map(([ic, v, l]) => `<div class="keyfact"><i>${icon(ic)}</i><div><b>${v}</b><small>${l}</small></div></div>`).join('');
     $('#p-plan').innerHTML = window.planHTML(p.price);
     $('#e-unit').value = name(p);
+    const v3d = $('#p-3d'); if (v3d) v3d.href = url('explore', 'unit=' + p.id);
     // mortgage calculator
     const dep = $('#c-dep'), yrs = $('#c-yrs'), out = $('#c-out'), rate = 0.045;
     const calc = () => { const loan = p.price * (1 - dep.value / 100), n = yrs.value * 12, r = rate / 12; const m = loan * r / (1 - Math.pow(1 + r, -n)); out.textContent = eur(Math.round(m)) + ' / month'; $('#c-dep-v').textContent = dep.value + '%'; $('#c-yrs-v').textContent = yrs.value + ' years'; };

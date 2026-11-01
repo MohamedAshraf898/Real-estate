@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>3D Experience — Linden Residences</title>
+<meta name="description" content="Explore Linden Residences in 3D: orbit the building, filter homes and business spaces, and open any unit to see its rooms, price and availability.">
+<meta property="og:title" content="3D Experience — Linden Residences">
+<meta property="og:image" content="https://images.unsplash.com/photo-1624204386084-dd8c05e32226?w=1200&h=630&q=80&fm=jpg&fit=crop">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/site.css">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+</head>
+<body data-page="explore">
+<main class="x" data-lenis-prevent>
+  <h1 class="sr-only">3D Experience — explore the building</h1>
+  <div class="x__stage">
+    <canvas tabindex="0" aria-label="3D model of the building. Drag to rotate, scroll or pinch to zoom, click a unit to see its details."></canvas>
+    <div class="x__tip" hidden></div>
+  </div>
+  <div class="x__loading" role="status"><span class="x__spinner"></span><span>Building the 3D model…</span></div>
+  <div class="x__fallback x-glass">
+    <span class="x-eyebrow">3D Experience</span>
+    <p class="h4">Your browser can't show the 3D model.</p>
+    <p class="muted">You can still browse every available home in the listings.</p>
+    <a class="btn btn--primary" href="properties.html">Browse properties</a>
+  </div>
+
+  <aside class="x-nav x-glass" aria-label="View angle">
+    <div class="x-nav__head"><span class="x-eyebrow">Navigation</span>
+      <button class="x-icon-btn x-reset" type="button" aria-label="Reset view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7L4 8.6"/><path d="M4 4v4.6h4.6"/></svg></button></div>
+    <div class="x-nav__map"><svg class="x-nav__plan" viewBox="-62 -46 124 96" aria-hidden="true"></svg></div>
+    <span class="x-nav__label">Select view angle</span>
+  </aside>
+  <div class="x-rot" role="group" aria-label="Rotate view">
+    <button class="x-icon-btn x-glass" type="button" data-rot="-1" aria-label="Rotate left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <button class="x-icon-btn x-glass" type="button" data-rot="1" aria-label="Rotate right"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+    <button class="x-icon-btn x-glass x-reset" type="button" aria-label="Reset view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7L4 8.6"/><path d="M4 4v4.6h4.6"/></svg></button>
+  </div>
+
+  <div class="x-dock x-glass">
+    <div class="x-mode">
+      <button class="x-pill x-mode__btn" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="x-mode-list"><span id="x-mode-label">Properties</span><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></i></button>
+      <ul class="x-mode__list x-glass" id="x-mode-list" role="listbox" aria-label="Show" hidden>
+        <li><button type="button" role="option" data-mode="Residence" aria-selected="false">Residences</button></li>
+        <li><button type="button" role="option" data-mode="Business" aria-selected="false">Business</button></li>
+        <li><button type="button" role="option" data-mode="overview" aria-selected="true">Building view</button></li>
+      </ul>
+    </div>
+    <button class="x-pill x-filters-btn" type="button" disabled aria-controls="x-filters"><span>Filters <b class="x-badge" hidden></b></span><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg></i></button>
+    <label class="x-time"><span class="sr-only">Time of day</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      <input type="range" id="x-hour" min="6" max="21" step="0.25" value="10">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>
+      <output id="x-hour-out">10:00 am</output>
+    </label>
+  </div>
+
+  <aside class="x-panel x-filters" id="x-filters" aria-label="Filters" data-lenis-prevent>
+    <div class="x-panel__head"><span class="x-eyebrow">Filters</span>
+      <button class="x-icon-btn x-close" type="button" aria-label="Close filters"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+    <div class="x-panel__body">
+      <fieldset class="x-group" data-for="Residence"><legend>Bedrooms</legend>
+        <div class="x-chips" data-single="beds"><button class="x-chip" type="button" data-v="all" aria-pressed="true">All</button><button class="x-chip" type="button" data-v="0" aria-pressed="false">Studio</button><button class="x-chip" type="button" data-v="1" aria-pressed="false">1 BR</button><button class="x-chip" type="button" data-v="2" aria-pressed="false">2 BR</button><button class="x-chip" type="button" data-v="3" aria-pressed="false">3 BR</button><button class="x-chip" type="button" data-v="4" aria-pressed="false">4 BR +</button></div>
+      </fieldset>
+      <fieldset class="x-group" data-for="Business" hidden><legend>Space</legend>
+        <div class="x-chips" data-single="type"><button class="x-chip" type="button" data-v="all" aria-pressed="true">All</button><button class="x-chip" type="button" data-v="Retail" aria-pressed="false">Retail</button><button class="x-chip" type="button" data-v="Office" aria-pressed="false">Office</button></div>
+      </fieldset>
+      <div class="x-group"><div class="x-range__head"><span>Area</span><output id="xf-area-out"></output></div>
+        <div class="x-range" id="xf-area"><input type="range" class="lo" aria-label="Minimum area"><input type="range" class="hi" aria-label="Maximum area"></div></div>
+      <div class="x-group"><div class="x-range__head"><span>Floor</span><output id="xf-floor-out"></output></div>
+        <div class="x-range" id="xf-floor"><input type="range" class="lo" aria-label="Lowest floor"><input type="range" class="hi" aria-label="Highest floor"></div></div>
+      <fieldset class="x-group"><legend>Features</legend>
+        <div class="x-chips" data-multi="feat">
+          <button class="x-chip" type="button" data-v="available" aria-pressed="false">Available only</button>
+          <button class="x-chip" type="button" data-v="garden" data-only="Residence" aria-pressed="false">Garden</button>
+          <button class="x-chip" type="button" data-v="terrace" data-only="Residence" aria-pressed="false">Terrace</button>
+          <button class="x-chip" type="button" data-v="corner" aria-pressed="false">Corner</button>
+          <button class="x-chip" type="button" data-v="wingA" aria-pressed="false">Wing A</button>
+          <button class="x-chip" type="button" data-v="wingB" aria-pressed="false">Wing B</button>
+          <button class="x-chip" type="button" data-v="wingV" aria-pressed="false">Wing V</button>
+        </div>
+      </fieldset>
+    </div>
+    <div class="x-panel__foot"><button class="btn btn--outline btn--sm x-reset-filters" type="button">Reset filters</button><span class="x-results" id="xf-count" aria-live="polite"></span></div>
+  </aside>
+
+  <aside class="x-panel x-unit" id="x-unit" aria-label="Unit details" data-lenis-prevent>
+    <div class="x-panel__head"><span class="x-eyebrow" id="xu-kind">Residence</span>
+      <div class="x-unit__nav">
+        <button class="x-icon-btn" type="button" id="xu-prev" aria-label="Previous unit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <button class="x-icon-btn" type="button" id="xu-next" aria-label="Next unit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+        <button class="x-icon-btn x-close" type="button" aria-label="Close unit details"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      </div></div>
+    <div class="x-panel__body">
+      <div class="x-unit__top">
+        <h2 class="x-unit__code" id="xu-code"></h2>
+        <div class="x-unit__meta"><span class="badge" id="xu-status"></span><span class="x-unit__price" id="xu-price"></span></div>
+      </div>
+      <dl class="x-unit__total"><dt>Total floor area</dt><dd id="xu-area"></dd></dl>
+      <dl class="x-rooms" id="xu-rooms"></dl>
+      <button class="x-link x-more" type="button" id="xu-more" aria-expanded="false">More</button>
+      <dl class="x-facts" id="xu-facts"></dl>
+      <div class="x-unit__actions">
+        <a class="btn btn--primary btn--sm" id="xu-request" href="contact.html">Submit a request</a>
+        <a class="btn btn--outline btn--sm" id="xu-details" href="property.html" hidden>Full details</a>
+        <button class="x-link" type="button" id="xu-share">Share</button>
+      </div>
+      <figure class="x-unit__plan"><img id="xu-plan" alt="" loading="lazy"><figcaption>Illustrative floor plan</figcaption></figure>
+    </div>
+  </aside>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="assets/motion.js"></script>
+<script src="assets/motion-plus.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/main.js"></script>
+<script type="module" src="assets/explore3d.js"></script>
+</body>
+</html>

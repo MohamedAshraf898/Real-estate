@@ -13,6 +13,7 @@ add_action( 'after_switch_theme', function () {
 		'project'    => array( 'The Project', 'templates/project.php' ),
 		'location'   => array( 'Location', 'templates/location.php' ),
 		'contact'    => array( 'Contact', 'templates/contact.php' ),
+		'explore'    => array( '3D Experience', 'templates/explore.php' ),
 	);
 	$home_id = 0;
 	foreach ( $pages as $slug => $p ) {
