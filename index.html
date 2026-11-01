@@ -22,11 +22,21 @@
 </div></div>
 
 <main>
-  <section class="hero">
-    <div class="hero__media"><img data-img="hero:2200" alt="Modern residential building with glass balconies" fetchpriority="high"></div>
-    <div class="wrap hero__content">
-      <span class="eyebrow">New Belgrade · Completion 2027</span>
-      <h1 class="display">Find a home that grows with you</h1>
+  <section class="hero hero--brand" aria-label="Linden Residences">
+    <div class="hero__media hero__slides">
+      <img data-img="hero:2200" alt="Residential building with glass balconies at dusk" fetchpriority="high">
+      <img data-img="facade:2200" alt="" aria-hidden="true">
+      <img data-img="block:2200" alt="" aria-hidden="true">
+    </div>
+    <div class="hero__brand">
+      <p class="hero__tag"><span>New Belgrade</span><span>Homes · Offices · Retail</span><span>Completion 2027</span></p>
+      <h1 class="hero__title"><span class="hero__line">Linden</span> <span class="hero__line">Residences</span></h1>
+    </div>
+    <div class="hero__leaves" aria-hidden="true"></div>
+  </section>
+
+  <section class="search-strip" aria-label="Find a property">
+    <div class="wrap">
       <form class="search" id="hero-search" role="search" aria-label="Find a property">
         <div class="search__field"><label for="s-type">Property type</label><select id="s-type" name="type"><option value="">Any type</option><option>Apartment</option><option>Penthouse</option><option>Office</option><option>Retail</option></select></div>
         <div class="search__field"><label for="s-beds">Bedrooms</label><select id="s-beds" name="beds"><option value="">Any</option><option value="0">Studio</option><option value="1">1 bedroom</option><option value="2">2 bedrooms</option><option value="3">3 bedrooms</option><option value="4">4+ bedrooms</option></select></div>
@@ -34,7 +44,6 @@
         <div class="search__field"><label for="s-wing">Building</label><select id="s-wing" name="wing"><option value="">All wings</option><option value="A">Wing A</option><option value="B">Wing B</option><option value="V">Wing V</option></select></div>
         <button class="btn btn--primary" type="submit">Search <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
       </form>
-      <span class="scroll-cue">Scroll to explore</span>
     </div>
   </section>
 

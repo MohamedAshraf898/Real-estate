@@ -18,6 +18,7 @@
   function heroIntro() {
     const hero = document.querySelector('.hero');
     if (!hero) return;
+    if (hero.classList.contains('hero--brand')) return brandHero(hero);
     const tl = gsap.timeline({ defaults: { ease } });
     const words = splitWords(hero.querySelector('h1'));
     if (reduce) return;
@@ -25,10 +26,40 @@
       .from('.site-header__bar', { y: -90, opacity: 0, duration: 1 }, 0.2)
       .from(hero.querySelector('.eyebrow'), { y: 20, opacity: 0, duration: .8 }, 0.35)
       .from(words, { yPercent: 115, duration: 1.1, stagger: 0.07 }, 0.4)
-      .from(hero.querySelectorAll('.lead, .search, .scroll-cue'), { y: 40, opacity: 0, duration: 1, stagger: 0.12 }, 0.9);
-    // hero image drifts slower than the page
+      .from(hero.querySelectorAll('.lead, .scroll-cue'), { y: 40, opacity: 0, duration: 1, stagger: 0.12 }, 0.9);
     gsap.to(hero.querySelector('.hero__media'), { yPercent: 18, ease: 'none', scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } });
-    gsap.to(hero.querySelector('.hero__content'), { yPercent: -12, opacity: 0.2, ease: 'none', scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } });
+    const content = hero.querySelector('.hero__content');
+    if (content) gsap.to(content, { yPercent: -12, opacity: 0.2, ease: 'none', scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } });
+  }
+
+  // Reference-style hero: slow cross-fading photos, giant brand title rising letter by letter, leaves sweeping up on scroll.
+  function brandHero(hero) {
+    const title = hero.querySelector('.hero__title');
+    title.querySelectorAll('.hero__line').forEach(line => { line.innerHTML = [...line.textContent].map(c => `<span class="w"><span class="ch">${c}</span></span>`).join(''); });
+    const chars = title.querySelectorAll('.ch');
+    const slides = [...hero.querySelectorAll('.hero__slides img')];
+    const leaves = hero.querySelector('.hero__leaves');
+    gsap.set(leaves, { yPercent: 72 });
+    if (reduce) return;
+    // photo loop: each slide slowly zooms out, then dissolves into the next
+    let i = 0;
+    const show = () => {
+      const cur = slides[i], next = slides[(i + 1) % slides.length];
+      gsap.fromTo(cur, { scale: 1.12 }, { scale: 1, duration: 7, ease: 'none' });
+      gsap.delayedCall(5.6, () => { gsap.set(next, { zIndex: 1 }); gsap.set(cur, { zIndex: 0 }); gsap.to(next, { opacity: 1, duration: 1.4, ease: 'power1.inOut', onComplete: () => gsap.set(cur, { opacity: 0 }) }); i = (i + 1) % slides.length; show(); });
+    };
+    show();
+    gsap.timeline({ defaults: { ease } })
+      .from('.site-header__bar', { y: -90, opacity: 0, duration: 1 }, 0.1)
+      .from(chars, { yPercent: 110, duration: 1.2, stagger: { each: 0.045, from: 'center' } }, 0.25)
+      .from(hero.querySelectorAll('.hero__tag span'), { y: 16, opacity: 0, duration: .8, stagger: .1 }, 0.9)
+      .from(leaves, { yPercent: 100, duration: 1.6, ease: 'power3.out' }, 0.6);
+    // scroll: media drifts, title lifts and fades, leaves sweep up to cover the bottom
+    const st = { trigger: hero, start: 'top top', end: 'bottom top', scrub: true };
+    gsap.to(hero.querySelector('.hero__media'), { yPercent: 22, scale: 1.06, ease: 'none', scrollTrigger: st });
+    gsap.to(hero.querySelector('.hero__brand'), { yPercent: -35, opacity: 0, ease: 'none', scrollTrigger: { ...st, end: '70% top' } });
+    gsap.fromTo(leaves, { yPercent: 72 }, { yPercent: -5, ease: 'none', immediateRender: false, scrollTrigger: st });
+    leaves.querySelectorAll('.lf').forEach((l, n) => { if (n % 3 === 0) gsap.to(l, { rotation: '+=' + (6 + n % 7), transformOrigin: '50% 0%', duration: 2.4 + (n % 5) * .4, yoyo: true, repeat: -1, ease: 'sine.inOut' }); });
   }
 
   function loader(el, done) {

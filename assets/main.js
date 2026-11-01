@@ -39,12 +39,12 @@
   const NAV = [['index.html', 'Home', 'home'], ['properties.html', 'Properties', 'properties'], ['project.html', 'The Project', 'project'], ['location.html', 'Location', 'location'], ['contact.html', 'Contact', 'contact']];
   const header = `
   <header class="site-header" id="top"><div class="wrap"><div class="site-header__bar">
+    <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">${icon('menu')}<span class="menu-label">Menu</span></button>
     <a class="logo" href="index.html" aria-label="${B.name} home">${LOGO}<span>${B.name}</span></a>
     <nav class="nav" aria-label="Main">${NAV.map(([h, l, k]) => `<a href="${h}" ${k === page ? 'aria-current="page"' : ''}>${l}</a>`).join('')}</nav>
     <div class="header-actions">
       <a class="icon-btn fav-link" href="properties.html?fav=1" aria-label="Saved properties">${icon('heart')}<span class="fav-count" hidden>0</span></a>
       <a class="btn btn--primary btn--sm" href="contact.html">Inquire ${icon('arrow')}</a>
-      <button class="icon-btn menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">${icon('menu')}</button>
     </div>
   </div></div></header>
   <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
@@ -73,6 +73,22 @@
   document.body.insertAdjacentHTML('afterbegin', header);
   document.body.insertAdjacentHTML('beforeend', footer);
   saveFavs();
+
+
+  // ---------- hero leaves (drawn in code) ----------
+  const leavesBox = $('.hero__leaves');
+  if (leavesBox) {
+    const greens = ['#1F271A', '#2E3A26', '#46573C', '#60735C', '#7F9270', '#9AA894'];
+    let sd = 11; const r = () => (sd = (sd * 16807) % 2147483647) / 2147483647;
+    const leaf = 'M0 0C-14-10-30-2-26 16C-22 30-6 38 0 48C6 38 22 30 26 16C30-2 14-10 0 0Z';
+    let g = '';
+    for (let i = 0; i < 260; i++) {
+      const x = r() * 1520 - 40, depth = Math.pow(r(), 1.4), y = 610 - depth * 420 + r() * 30;
+      const sc = 0.55 + (1 - depth) * 0.9 + r() * 0.35, rot = r() * 360, c = greens[Math.min(5, Math.floor(depth * 4.5 + r() * 1.5))];
+      g += `<g class="lf" transform="translate(${x.toFixed(0)} ${y.toFixed(0)}) rotate(${rot.toFixed(0)}) scale(${sc.toFixed(2)})"><path d="${leaf}" fill="${c}"/><path d="M0 4V46" stroke="rgba(253,251,239,.18)" stroke-width="1.2" fill="none"/></g>`;
+    }
+    leavesBox.innerHTML = `<svg viewBox="0 0 1440 600" preserveAspectRatio="xMidYMax slice"><rect x="-40" y="560" width="1520" height="60" fill="#FDFBEF"/>${g}<rect x="-40" y="585" width="1520" height="40" fill="#FDFBEF"/></svg>`;
+  }
 
   // loader (home only): counts up while hero image loads, max ~1.4s
   const loader = $('.loader');
