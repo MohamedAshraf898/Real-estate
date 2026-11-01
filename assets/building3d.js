@@ -157,13 +157,15 @@ async function init() {
     gsap.from(section.querySelector('.b3d__panel'), { y: 60, opacity: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: section, start: 'top 70%', once: true } });
     const mm = gsap.matchMedia();
     mm.add('(min-width: 900px)', () => {
-      gsap.timeline({ scrollTrigger: { trigger: section, start: 'top top', end: '+=160%', pin: true, scrub: 1, onUpdate: () => { needs = true; } } })
+      gsap.timeline({ scrollTrigger: { trigger: section, start: 'top top', end: '+=160%', pin: true, scrub: 1, refreshPriority: 1, onUpdate: () => { needs = true; } } })
         .to(cam, { angle: 0.75, radius: 82, height: 34, ease: 'none' }, 0)
         .to(look, { y: 9, ease: 'none' }, 0);
     });
     mm.add('(max-width: 899px)', () => {
       gsap.to(cam, { angle: 0.6, ease: 'none', scrollTrigger: { trigger: section, start: 'top bottom', end: 'bottom top', scrub: 1, onUpdate: () => { needs = true; } } });
     });
+    // this pin is created after the page's other ScrollTriggers, so re-sort and recalculate them all
+    ST.sort(); ST.refresh();
   }
 
   // ---- hover / click floors ----

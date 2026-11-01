@@ -47,7 +47,7 @@
       <a class="btn btn--primary btn--sm" href="contact.html">Inquire ${icon('arrow')}</a>
     </div>
   </div></div></header>
-  <div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Site menu" aria-hidden="true">
+  <div class="mobile-menu" id="mobile-menu" data-lenis-prevent role="dialog" aria-modal="true" aria-label="Site menu" aria-hidden="true">
     <div class="mm__top"><a class="logo" href="index.html">${LOGO}<span>${B.name}</span></a>
       <button class="mm__close menu-close" type="button" aria-label="Close menu">${icon('close')}<span>Close</span></button></div>
     <div class="mm__body">
@@ -109,17 +109,18 @@
 
 
   // mobile menu
+  const lock = on => { document.body.style.overflow = on ? 'hidden' : ''; if (window.lenis) on ? window.lenis.stop() : window.lenis.start(); };
   const mm = $('#mobile-menu'), mb = $('.menu-btn');
   const setMenu = open => {
     if (open === mm.classList.contains('is-open')) return;
     mm.classList.toggle('is-open', open); mm.setAttribute('aria-hidden', !open); mb.setAttribute('aria-expanded', open);
-    document.body.style.overflow = open ? 'hidden' : '';
+    lock(open);
     if (window.Motion) window.Motion.menu(mm, open);
     if (open) setTimeout(() => $('.menu-close').focus(), 50); else mb.focus();
   };
   mb.addEventListener('click', () => setMenu(true));
   $('.menu-close').addEventListener('click', () => setMenu(false));
-  $$('.mm__nav a', mm).forEach(a => a.addEventListener('click', () => { document.body.style.overflow = ''; }));
+  $$('.mm__nav a', mm).forEach(a => a.addEventListener('click', () => lock(false)));
   addEventListener('keydown', e => {
     if (!mm.classList.contains('is-open')) return;
     if (e.key === 'Escape') setMenu(false);
@@ -274,7 +275,7 @@
     $('#sort').addEventListener('change', e => { st.sort = e.target.value; run(); });
     // mobile filter sheet
     const sheet = $('.filters'), bd = $('.backdrop');
-    const setSheet = o => { sheet.classList.toggle('is-open', o); bd.classList.toggle('is-open', o); document.body.style.overflow = o ? 'hidden' : ''; };
+    const setSheet = o => { sheet.classList.toggle('is-open', o); bd.classList.toggle('is-open', o); lock(o); };
     $('.filters-toggle').addEventListener('click', () => setSheet(true));
     $$('[data-close-sheet]').forEach(b => b.addEventListener('click', () => setSheet(false)));
     bd.addEventListener('click', () => setSheet(false));
