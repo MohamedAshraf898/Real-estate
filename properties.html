@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Properties for sale — Linden Residences</title>
+<meta name="description" content="Browse apartments, penthouses, offices and retail units. Filter by type, bedrooms, budget, size and building.">
+<meta property="og:title" content="Properties for sale — Linden Residences">
+<meta property="og:image" content="https://images.unsplash.com/photo-1724582586529-62622e50c0b3?w=1200&h=630&q=80&fm=jpg&fit=crop">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body data-page="properties">
+<main class="page-top">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span data-icon="chevron"></span><span aria-current="page">Properties</span></nav>
+    <div class="section-head" style="margin-bottom:32px"><span class="eyebrow">Residences · Business · Retail</span><h1 class="h1" id="list-title">Properties for sale</h1></div>
+
+    <div class="listing-layout">
+      <aside class="filters" aria-label="Filters">
+        <div class="filters__sheet-head"><h2 class="h4">Filters</h2><button class="text-link" type="button" data-clear>Clear all</button><button class="icon-btn" type="button" aria-label="Close filters" data-close-sheet data-icon="close"></button></div>
+        <div class="filters__group"><h3>Property type</h3><div class="chips">
+          <button class="chip" type="button" data-f="type" data-v="Apartment">Apartment</button><button class="chip" type="button" data-f="type" data-v="Penthouse">Penthouse</button>
+          <button class="chip" type="button" data-f="type" data-v="Office">Office</button><button class="chip" type="button" data-f="type" data-v="Retail">Retail</button></div></div>
+        <div class="filters__group"><h3>Bedrooms</h3><div class="chips">
+          <button class="chip" type="button" data-f="beds" data-v="0">Studio</button><button class="chip" type="button" data-f="beds" data-v="1">1</button><button class="chip" type="button" data-f="beds" data-v="2">2</button>
+          <button class="chip" type="button" data-f="beds" data-v="3">3</button><button class="chip" type="button" data-f="beds" data-v="4">4+</button></div></div>
+        <div class="filters__group"><h3>Price</h3><div class="range">
+          <div class="field"><label for="f-min" class="muted">Min</label><select class="select" id="f-min"><option value="">Any</option><option value="150000">€ 150k</option><option value="250000">€ 250k</option><option value="350000">€ 350k</option><option value="500000">€ 500k</option></select></div>
+          <div class="field"><label for="f-max" class="muted">Max</label><select class="select" id="f-max"><option value="">Any</option><option value="200000">€ 200k</option><option value="300000">€ 300k</option><option value="450000">€ 450k</option><option value="700000">€ 700k</option></select></div></div></div>
+        <div class="filters__group"><div class="range">
+          <div class="field"><label for="f-size">Min size</label><select class="select" id="f-size"><option value="">Any</option><option value="40">40 m²</option><option value="60">60 m²</option><option value="80">80 m²</option><option value="120">120 m²</option></select></div>
+          <div class="field"><label for="f-wing">Building</label><select class="select" id="f-wing"><option value="">All</option><option value="A">Wing A</option><option value="B">Wing B</option><option value="V">Wing V</option></select></div></div></div>
+        <div class="filters__group"><h3>Features</h3>
+          <label class="check"><input type="checkbox" id="f-parking"> Parking included</label>
+          <label class="check"><input type="checkbox" id="f-park"> Park view</label>
+          <label class="check"><input type="checkbox" id="f-sold" checked> Hide sold units</label></div>
+        <div class="filters__apply"><button class="btn btn--primary btn--block" type="button" data-close-sheet>Show <span id="apply-count">0</span> results</button></div>
+      </aside>
+
+      <section aria-labelledby="count">
+        <div class="toolbar">
+          <h2 class="h4" id="count" aria-live="polite">— properties</h2>
+          <div class="toolbar__right">
+            <button class="btn btn--outline btn--sm filters-toggle" type="button"><span data-icon="filter" style="display:inline-flex;width:18px"></span>Filters</button>
+            <label class="sr-only" for="sort">Sort by</label>
+            <select class="select" id="sort"><option value="recommended">Recommended</option><option value="price-asc">Price: low to high</option><option value="price-desc">Price: high to low</option><option value="ppm">Price per m²</option><option value="size">Largest first</option><option value="floor">Highest floor</option></select>
+            <div class="view-toggle" role="group" aria-label="View"><button type="button" data-view="grid" aria-pressed="true"><span data-icon="grid" style="display:inline-flex"></span><span class="vt-label">Grid</span></button><button type="button" data-view="list" aria-pressed="false"><span data-icon="list" style="display:inline-flex"></span><span class="vt-label">List</span></button></div>
+          </div>
+        </div>
+        <div class="active-filters" id="active"></div>
+        <div class="cards" id="results"></div>
+      </section>
+    </div>
+  </div>
+  <div class="section"></div>
+</main>
+<div class="backdrop"></div>
+<script src="assets/data.js"></script>
+<script src="assets/main.js"></script>
+</body>
+</html>

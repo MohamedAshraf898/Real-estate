@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Property — Linden Residences</title>
+<meta name="description" content="Apartment details: photos, floor plan, key facts, price, payment plan and viewing booking.">
+<meta property="og:title" content="Linden Residences — Property details">
+<meta property="og:image" content="https://images.unsplash.com/photo-1705321963943-de94bb3f0dd3?w=1200&h=630&q=80&fm=jpg&fit=crop">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body data-page="property">
+<main class="page-top">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span data-icon="chevron"></span><a href="properties.html">Properties</a><span data-icon="chevron"></span><span aria-current="page" id="crumb"></span></nav>
+    <div class="gallery">
+      <div class="gallery__main"><img id="g-main" alt=""><span class="badge" id="g-badge"></span></div>
+      <div class="gallery__thumbs" id="g-thumbs"></div>
+    </div>
+
+    <div class="detail">
+      <div class="stack" style="--gap:0">
+        <div class="stack">
+          <span class="eyebrow" id="p-eyebrow"></span>
+          <div style="display:flex;justify-content:space-between;gap:16px;align-items:start"><h1 class="h1" id="p-title"></h1><button class="icon-btn fav" id="fav-main" type="button" aria-label="Save this property" aria-pressed="false" data-icon="heart"></button></div>
+          <div style="display:flex;gap:12px;align-items:center"><span class="badge" id="p-status"></span><span class="muted">Updated weekly by the sales team</span></div>
+          <p class="h2" id="p-price" style="margin-top:8px"></p>
+          <p class="muted" id="p-ppm"></p>
+        </div>
+        <div class="section" style="padding-block:48px 0"><div class="keyfacts" id="keyfacts"></div></div>
+        <div class="section reveal" style="padding-block:56px 0">
+          <h2 class="h3">About this home</h2>
+          <p class="lead" style="margin-top:16px;max-width:62ch">An open-plan living and dining space flows onto a deep terrace, with floor-to-ceiling glazing on two sides. The kitchen is fitted with integrated appliances and stone worktops; bedrooms have built-in wardrobes and the main bathroom has a walk-in shower and underfloor heating.</p>
+          <div class="facts" style="margin-top:20px;gap:12px 24px"><span data-icon="check">Underfloor heating</span><span data-icon="check">Smart-home ready</span><span data-icon="check">Triple glazing</span><span data-icon="check">Video intercom</span><span data-icon="check">Storage room</span></div>
+        </div>
+        <div class="section reveal" style="padding-block:56px 0"><h2 class="h3">Floor plan</h2><div class="floorplan" style="margin-top:20px"><img data-img="floorplan:1400" alt="Floor plan of the apartment" loading="lazy"></div></div>
+        <div class="section reveal" style="padding-block:56px 0"><h2 class="h3">Payment plan for this home</h2><p class="muted" style="margin:8px 0 24px">Amounts are based on the current price.</p><div id="p-plan"></div></div>
+        <div class="section" style="padding-block:56px 0">
+          <div class="calc reveal"><h2 class="h4">Mortgage estimate</h2>
+            <label class="field">Deposit <span class="muted" id="c-dep-v"></span><input type="range" id="c-dep" min="10" max="60" step="5" value="30"></label>
+            <label class="field">Term <span class="muted" id="c-yrs-v"></span><input type="range" id="c-yrs" min="10" max="30" step="5" value="25"></label>
+            <output id="c-out" aria-live="polite"></output><span class="muted">Estimate at 4.5% fixed. Not financial advice — ask your bank for an offer.</span></div>
+        </div>
+        <div class="section reveal" style="padding-block:56px 0"><h2 class="h3">What's around</h2><div class="places" data-places style="margin-top:12px"></div></div>
+      </div>
+
+      <aside class="enquiry" aria-labelledby="enq-title">
+        <div class="agent"><i data-icon="user"></i><div><b>Ana Petrović</b><div class="muted">Sales advisor · replies within 1 hour</div></div></div>
+        <form class="form" novalidate>
+          <div class="form-body form-grid">
+            <h2 class="h4" id="enq-title">Book a viewing</h2>
+            <div class="segmented"><label class="check"><input type="radio" name="kind" checked> In person</label><label class="check"><input type="radio" name="kind"> Video call</label></div>
+            <input type="hidden" id="e-unit" name="unit">
+            <div class="field"><label for="e-name">Full name</label><input class="input" id="e-name" name="name" autocomplete="name" required><span class="error" data-err="name"></span></div>
+            <div class="field"><label for="e-email">Email</label><input class="input" id="e-email" name="email" type="email" autocomplete="email" required data-msg="Please enter a valid email"><span class="error" data-err="email"></span></div>
+            <div class="field"><label for="e-date">Preferred date</label><input class="input" id="e-date" name="date" type="date"></div>
+            <button class="btn btn--primary btn--block" type="submit">Book a viewing</button>
+            <a class="btn btn--outline btn--block" href="contact.html">Ask a question</a>
+          </div>
+          <div class="form-success" tabindex="-1"><h3 class="h4">Thank you!</h3><p class="muted" style="margin-top:8px">Your request was received. Our advisor will confirm the time by email. (Demo site — no data is sent.)</p></div>
+        </form>
+      </aside>
+    </div>
+  </div>
+  <section class="section section--subtle" style="margin-top:96px">
+    <div class="wrap"><div class="section-head reveal"><span class="eyebrow">You may also like</span><h2 class="h2">Similar units</h2></div><div class="cards cards--3" id="similar"></div></div>
+  </section>
+  <div style="height:72px" class="mobile-spacer"></div>
+</main>
+<div class="sticky-bar"><div><div class="price" id="bar-price"></div><div class="muted" id="bar-name"></div></div><a class="btn btn--primary btn--sm" href="#enq-title">Book viewing</a></div>
+<script src="assets/data.js"></script>
+<script src="assets/main.js"></script>
+</body>
+</html>

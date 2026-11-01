@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Linden Residences — New homes in New Belgrade</title>
+<meta name="description" content="Residences, penthouses, offices and retail in New Belgrade. Light-filled homes, rooftop parks and a payment plan that grows with the building.">
+<meta property="og:title" content="Linden Residences — New homes in New Belgrade">
+<meta property="og:description" content="Light-filled homes, rooftop parks and a payment plan that grows with the building.">
+<meta property="og:image" content="https://images.unsplash.com/photo-1624204386084-dd8c05e32226?w=1200&h=630&q=80&fm=jpg&fit=crop">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body data-page="home">
+<div class="loader" aria-hidden="true"><div class="loader__inner">
+  <svg width="56" height="56" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#A68150"/><path d="M16 26V14M16 18l-5-5M16 15l5-5M16 21l4-3" stroke="#FDFBEF" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  <div class="loader__bar"><span></span></div><span class="loader__pct">0%</span>
+</div></div>
+
+<main>
+  <section class="hero">
+    <div class="hero__media"><img data-img="hero:2200" alt="Modern residential building with glass balconies" fetchpriority="high"></div>
+    <div class="wrap hero__content">
+      <span class="eyebrow">New Belgrade · Completion 2027</span>
+      <h1 class="display">Find a home that grows with you</h1>
+      <form class="search" id="hero-search" role="search" aria-label="Find a property">
+        <div class="search__field"><label for="s-type">Property type</label><select id="s-type" name="type"><option value="">Any type</option><option>Apartment</option><option>Penthouse</option><option>Office</option><option>Retail</option></select></div>
+        <div class="search__field"><label for="s-beds">Bedrooms</label><select id="s-beds" name="beds"><option value="">Any</option><option value="0">Studio</option><option value="1">1 bedroom</option><option value="2">2 bedrooms</option><option value="3">3 bedrooms</option><option value="4">4+ bedrooms</option></select></div>
+        <div class="search__field"><label for="s-max">Budget</label><select id="s-max" name="max"><option value="">No limit</option><option value="200000">Up to € 200,000</option><option value="300000">Up to € 300,000</option><option value="450000">Up to € 450,000</option><option value="700000">Up to € 700,000</option></select></div>
+        <div class="search__field"><label for="s-wing">Building</label><select id="s-wing" name="wing"><option value="">All wings</option><option value="A">Wing A</option><option value="B">Wing B</option><option value="V">Wing V</option></select></div>
+        <button class="btn btn--primary" type="submit">Search <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+      </form>
+      <span class="scroll-cue">Scroll to explore</span>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap grid-2">
+      <div class="stack reveal">
+        <span class="eyebrow">The project</span>
+        <h2 class="h2">A calm, green address in the most connected part of the city.</h2>
+        <p class="lead">Three low-rise wings wrapped in planted terraces, two rooftop parks and a ground floor of cafés and shops — designed so that everyday life feels easy and unhurried.</p>
+        <a class="link-arrow" href="project.html">Discover the project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="stats reveal">
+        <div class="stat"><b>96</b><span class="muted">Homes from studios to penthouses</span></div>
+        <div class="stat"><b>14</b><span class="muted">Retail &amp; office units</span></div>
+        <div class="stat"><b>2</b><span class="muted">Private rooftop parks</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--subtle">
+    <div class="wrap">
+      <div class="section-head section-head--row reveal">
+        <div class="stack"><span class="eyebrow">Available now</span><h2 class="h2">Featured homes</h2><p class="lead">Hand-picked units with the best light, views and value.</p></div>
+        <a class="btn btn--outline" href="properties.html">View all properties <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="cards cards--3" id="featured"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head reveal"><span class="eyebrow">Residences</span><h2 class="h2">Find your layout</h2><p class="lead">Open-plan living, generous glazing and a private outdoor space in every home.</p></div>
+      <div class="types" id="types">
+        <a class="type reveal" href="properties.html?beds=0" data-from data-beds="0"><span class="eyebrow">Studio</span><span class="h4"></span><span class="muted"></span></a>
+        <a class="type reveal" href="properties.html?beds=1" data-from data-beds="1"><span class="eyebrow">One bedroom</span><span class="h4"></span><span class="muted"></span></a>
+        <a class="type reveal" href="properties.html?beds=2" data-from data-beds="2"><span class="eyebrow">Two bedroom</span><span class="h4"></span><span class="muted"></span></a>
+        <a class="type reveal" href="properties.html?beds=3" data-from data-beds="3"><span class="eyebrow">Three bedroom</span><span class="h4"></span><span class="muted"></span></a>
+        <a class="type reveal" href="properties.html?beds=4" data-from data-beds="4"><span class="eyebrow">Four bedroom +</span><span class="h4"></span><span class="muted"></span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark">
+    <div class="wrap grid-2">
+      <div class="stack reveal">
+        <span class="eyebrow">Interiors</span>
+        <h2 class="h2">Light from morning to evening</h2>
+        <p class="lead">Floor-to-ceiling windows, oak floors and quiet, natural materials. Every plan is designed around how the sun moves across the day.</p>
+        <a class="btn btn--primary" href="properties.html" style="justify-self:start">Explore residences <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="reveal-img" style="aspect-ratio:4/3"><img data-img="living2:1400" alt="Bright living room with large windows" loading="lazy" style="width:100%;height:100%;object-fit:cover"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head reveal"><span class="eyebrow">Amenities</span><h2 class="h2">More than a residence</h2></div>
+      <div class="tabs" role="tablist" aria-label="Amenities">
+        <button role="tab" id="t1" aria-controls="am1" aria-selected="true">Rooftop parks</button>
+        <button role="tab" id="t2" aria-controls="am2" aria-selected="false" tabindex="-1">Private fitness</button>
+        <button role="tab" id="t3" aria-controls="am3" aria-selected="false" tabindex="-1">Café &amp; restaurant</button>
+        <button role="tab" id="t4" aria-controls="am4" aria-selected="false" tabindex="-1">Garage</button>
+      </div>
+      <div class="panel grid-2" id="am1" role="tabpanel" aria-labelledby="t1"><div class="panel__img"><img data-img="rooftop:1400" alt="Rooftop garden overlooking the city" loading="lazy"></div><div class="stack"><h3 class="h3">Two private rooftop parks</h3><p class="lead">Lawns, trees and lounge terraces for residents and their guests, with sunset views over the river.</p></div></div>
+      <div class="panel grid-2" id="am2" role="tabpanel" aria-labelledby="t2" hidden><div class="panel__img"><img data-img="gym:1400" alt="Fitness studio with city view" loading="lazy"></div><div class="stack"><h3 class="h3">Two residents-only gyms</h3><p class="lead">Cardio, free weights and a stretching studio, open 24/7 with your resident key.</p></div></div>
+      <div class="panel grid-2" id="am3" role="tabpanel" aria-labelledby="t3" hidden><div class="panel__img"><img data-img="restaurant:1400" alt="Terrace dining overlooking the city" loading="lazy"></div><div class="stack"><h3 class="h3">Top-floor café &amp; restaurant</h3><p class="lead">Morning coffee to evening dinner, one lift ride from your door.</p></div></div>
+      <div class="panel grid-2" id="am4" role="tabpanel" aria-labelledby="t4" hidden><div class="panel__img"><img data-img="garage:1400" alt="Underground parking garage" loading="lazy"></div><div class="stack"><h3 class="h3">Underground garage</h3><p class="lead">240 spaces with EV charging, bike storage and direct lift access to every wing.</p></div></div>
+    </div>
+  </section>
+
+  <section class="section section--subtle">
+    <div class="wrap grid-2" style="align-items:start">
+      <div class="stack reveal">
+        <span class="eyebrow">Location</span>
+        <h2 class="h2">Everything within minutes</h2>
+        <p class="lead">Rail, schools, business parks and the river promenade — all close by.</p>
+        <div class="places" data-places></div>
+        <a class="link-arrow" href="location.html" style="margin-top:24px">See the neighbourhood <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="reveal-img" style="aspect-ratio:4/5"><img data-img="aerial:1400" alt="Aerial view of buildings and green courtyards" loading="lazy" style="width:100%;height:100%;object-fit:cover"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head reveal"><span class="eyebrow">Buying</span><h2 class="h2">Pay as the building grows</h2><p class="lead">Installments linked to construction milestones — no large payment up front.</p></div>
+      <div data-plan class="reveal"></div>
+    </div>
+  </section>
+
+  <section class="section section--dark">
+    <div class="wrap cta reveal">
+      <div class="stack"><h2 class="h2">See it for yourself</h2><p class="lead">Book a private tour of the show apartment, or a video call with our sales team.</p></div>
+      <a class="btn btn--primary" href="contact.html">Book a viewing <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+  </section>
+</main>
+<script src="assets/data.js"></script>
+<script src="assets/main.js"></script>
+</body>
+</html>
