@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact — Linden Residences</title>
+<meta name="description" content="Talk to the Linden Residences sales team: ask a question, request prices or book a viewing.">
+<meta property="og:title" content="Contact — Linden Residences">
+<meta property="og:image" content="https://images.unsplash.com/photo-1624204386084-dd8c05e32226?w=1200&h=630&q=80&fm=jpg&fit=crop">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body data-page="contact">
+<main class="page-top">
+  <div class="wrap">
+    <div class="section-head" style="margin-bottom:40px"><span class="eyebrow">Contact</span><h1 class="h1">Talk to our sales team</h1><p class="lead">Ask a question, request prices or book a viewing. We reply within one working hour.</p></div>
+    <div class="detail" style="margin-top:0">
+      <form class="form enquiry" novalidate style="box-shadow:none">
+        <div class="form-body form-grid">
+          <div class="form-grid form-grid--2">
+            <div class="field"><label for="c-first">First name</label><input class="input" id="c-first" name="first" autocomplete="given-name" required><span class="error" data-err="first"></span></div>
+            <div class="field"><label for="c-last">Last name</label><input class="input" id="c-last" name="last" autocomplete="family-name"></div>
+            <div class="field"><label for="c-email">Email</label><input class="input" id="c-email" name="email" type="email" autocomplete="email" required data-msg="Please enter a valid email"><span class="error" data-err="email"></span></div>
+            <div class="field"><label for="c-phone">Phone</label><input class="input" id="c-phone" name="phone" type="tel" autocomplete="tel"></div>
+          </div>
+          <div class="field"><label for="c-interest">I'm interested in</label><select class="select" id="c-interest" name="interest"><option>Apartment</option><option>Penthouse</option><option>Office</option><option>Retail unit</option><option>Investment</option></select></div>
+          <div class="field"><label for="c-msg">Message</label><textarea class="textarea" id="c-msg" name="msg" placeholder="Tell us what you are looking for…"></textarea></div>
+          <div class="segmented"><label class="check"><input type="radio" name="kind" checked> In-person viewing</label><label class="check"><input type="radio" name="kind"> Video call</label><label class="check"><input type="radio" name="kind"> Just a question</label></div>
+          <label class="check"><input type="checkbox" name="consent" required data-msg="Please accept the privacy policy"> I agree to the privacy policy</label><span class="error" data-err="consent"></span>
+          <button class="btn btn--primary" type="submit" style="justify-self:start">Send request</button>
+        </div>
+        <div class="form-success" tabindex="-1"><h2 class="h3">Thank you!</h2><p class="lead" style="margin-top:8px">We received your request and will reply shortly. (Demo site — no data is sent.)</p></div>
+      </form>
+      <aside class="stack">
+        <div class="office">
+          <span class="eyebrow">Sales office</span>
+          <h2 class="h4" id="o-addr">Linden Boulevard 12, New Belgrade</h2>
+          <p data-icon="clock">Mon–Fri 9–19 · Sat 10–16</p>
+          <p data-icon="phone"><a href="tel:+381000000000">+381 00 000 0000</a></p>
+          <p data-icon="mail"><a href="mailto:sales@linden-residences.example">sales@linden-residences.example</a></p>
+          <a class="btn btn--primary btn--block" href="#" onclick="return false">WhatsApp us</a>
+        </div>
+        <div class="map" style="min-height:260px"><iframe title="Sales office map" loading="lazy" referrerpolicy="no-referrer" src="https://www.openstreetmap.org/export/embed.html?bbox=20.39%2C44.80%2C20.42%2C44.82&amp;layer=mapnik"></iframe></div>
+      </aside>
+    </div>
+  </div>
+
+  <section class="section" id="faq">
+    <div class="wrap">
+      <div class="section-head"><span class="eyebrow">FAQ</span><h2 class="h2">Frequently asked questions</h2></div>
+      <div class="faq">
+        <details open><summary>When will the building be completed?</summary><p>Handover is planned for Q3 2027. We publish construction updates with photos every month.</p></details>
+        <details><summary>Can foreign buyers purchase a home?</summary><p>Yes. Our team works with local notaries and lawyers who guide international buyers through every step.</p></details>
+        <details><summary>How does the payment plan work?</summary><p>You pay in five installments linked to construction milestones: 20% at reservation, 20% at foundations, 20% at structure, 30% at 80% completion and 10% at handover.</p></details>
+        <details><summary>Is parking included?</summary><p>Most homes include one space in the underground garage. Extra spaces and storage rooms can be purchased separately.</p></details>
+        <details><summary>Can I choose my own finishes?</summary><p>Yes — until the structure stage you can choose from three interior palettes and adjust selected layouts.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="assets/motion.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/main.js"></script>
+</body>
+</html>
