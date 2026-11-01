@@ -7,6 +7,13 @@
   const eur = n => '€ ' + n.toLocaleString('en-US');
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
+  // Page addresses: the static site uses .html files; the WordPress theme passes window.SITE_URLS.
+  const U = Object.assign({ home: 'index.html', properties: 'properties.html', property: 'property.html', project: 'project.html', location: 'location.html', contact: 'contact.html' }, window.SITE_URLS || {});
+  const url = (k, q) => U[k] + (q ? (U[k].indexOf('?') > -1 ? '&' : '?') + q : '');
+  window.siteUrl = url;
+  // Photo source: a key from IMG (demo photos) or a full URL (WordPress media).
+  const imgSrc = (k, w) => /^(https?:)?\/\//.test(k) || k.charAt(0) === '/' ? k : IMG[k](w);
+
   // ---------- icons ----------
   const P = {
     arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>', heart: '<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7z"/>',
@@ -36,42 +43,42 @@
   const saveFavs = () => { try { localStorage.setItem(FKEY, JSON.stringify([...favs])); } catch (e) {} $$('.fav-count').forEach(el => { el.textContent = favs.size; el.hidden = !favs.size; }); };
 
   // ---------- header / footer ----------
-  const NAV = [['index.html', 'Home', 'home'], ['properties.html', 'Properties', 'properties'], ['project.html', 'The Project', 'project'], ['location.html', 'Location', 'location'], ['contact.html', 'Contact', 'contact']];
+  const NAV = [[url('home'), 'Home', 'home'], [url('properties'), 'Properties', 'properties'], [url('project'), 'The Project', 'project'], [url('location'), 'Location', 'location'], [url('contact'), 'Contact', 'contact']];
   const header = `
   <header class="site-header" id="top"><div class="wrap"><div class="site-header__bar">
     <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">${icon('menu')}<span class="menu-label">Menu</span></button>
-    <a class="logo" href="index.html" aria-label="${B.name} home">${LOGO}<span>${B.name}</span></a>
+    <a class="logo" href="${url('home')}" aria-label="${B.name} home">${LOGO}<span>${B.name}</span></a>
     <nav class="nav" aria-label="Main">${NAV.map(([h, l, k]) => `<a href="${h}" ${k === page ? 'aria-current="page"' : ''}>${l}</a>`).join('')}</nav>
     <div class="header-actions">
-      <a class="icon-btn fav-link" href="properties.html?fav=1" aria-label="Saved properties">${icon('heart')}<span class="fav-count" hidden>0</span></a>
-      <a class="btn btn--primary btn--sm" href="contact.html">Inquire ${icon('arrow')}</a>
+      <a class="icon-btn fav-link" href="${url('properties', 'fav=1')}" aria-label="Saved properties">${icon('heart')}<span class="fav-count" hidden>0</span></a>
+      <a class="btn btn--primary btn--sm" href="${url('contact')}">Inquire ${icon('arrow')}</a>
     </div>
   </div></div></header>
   <div class="mobile-menu" id="mobile-menu" data-lenis-prevent role="dialog" aria-modal="true" aria-label="Site menu" aria-hidden="true">
-    <div class="mm__top"><a class="logo" href="index.html">${LOGO}<span>${B.name}</span></a>
+    <div class="mm__top"><a class="logo" href="${url('home')}">${LOGO}<span>${B.name}</span></a>
       <button class="mm__close menu-close" type="button" aria-label="Close menu">${icon('close')}<span>Close</span></button></div>
     <div class="mm__body">
       <nav class="mm__nav" aria-label="Pages">${NAV.map(([h, l, k], i) => `<a href="${h}" ${k === page ? 'aria-current="page"' : ''}><small>0${i + 1}</small><span>${l}</span>${icon('arrow')}</a>`).join('')}</nav>
       <aside class="mm__side">
         <div class="mm__img"><img data-img="facade:900" alt="" loading="lazy"></div>
         <div class="mm__info"><span class="eyebrow">Sales office</span><p>${B.address}</p><p><a href="tel:${B.phone.replace(/\s/g, '')}">${B.phone}</a><br><a href="mailto:${B.email}">${B.email}</a></p></div>
-        <a class="btn btn--primary btn--block" href="contact.html">Book a viewing ${icon('arrow')}</a>
+        <a class="btn btn--primary btn--block" href="${url('contact')}">Book a viewing ${icon('arrow')}</a>
       </aside>
     </div>
   </div>`;
   const footer = `
   <footer class="site-footer"><div class="wrap">
     <div class="footer-top">
-      <div class="stack"><a class="logo" href="index.html">${LOGO}<span>${B.name}</span></a>
+      <div class="stack"><a class="logo" href="${url('home')}">${LOGO}<span>${B.name}</span></a>
         <p style="color:var(--sand-400);font-size:.875rem;max-width:32ch">A residential and business address in ${B.district}, built around light, greenery and long-term value.</p>
         <p style="font-size:.875rem">${B.address}<br>${B.phone}</p></div>
       <div class="footer-cols">
-        <div><h4>Properties</h4><a href="properties.html?type=Apartment">Apartments</a><a href="properties.html?type=Penthouse">Penthouses</a><a href="properties.html?type=Office">Offices</a><a href="properties.html?type=Retail">Retail</a></div>
-        <div><h4>Project</h4><a href="project.html">Design</a><a href="project.html#amenities">Amenities</a><a href="project.html#progress">Progress</a><a href="location.html">Location</a></div>
-        <div><h4>Company</h4><a href="contact.html">Contact</a><a href="contact.html#faq">FAQ</a><a href="#">Privacy</a><a href="#">Terms</a></div>
+        <div><h4>Properties</h4><a href="${url('properties', 'type=Apartment')}">Apartments</a><a href="${url('properties', 'type=Penthouse')}">Penthouses</a><a href="${url('properties', 'type=Office')}">Offices</a><a href="${url('properties', 'type=Retail')}">Retail</a></div>
+        <div><h4>Project</h4><a href="${url('project')}">Design</a><a href="${url('project')}#amenities">Amenities</a><a href="${url('project')}#progress">Progress</a><a href="${url('location')}">Location</a></div>
+        <div><h4>Company</h4><a href="${url('contact')}">Contact</a><a href="${url('contact')}#faq">FAQ</a><a href="#">Privacy</a><a href="#">Terms</a></div>
       </div>
       <div><h3 class="h4" style="color:var(--cream-100)">Join our community</h3><p style="color:var(--sand-400);font-size:.875rem;margin-top:8px">Launch news, new releases and price updates.</p>
-        <form class="newsletter" data-toast="Thanks — you're on the list."><label class="sr-only" for="nl">Email address</label><input id="nl" type="email" placeholder="Email address" required><button class="btn btn--primary btn--sm" type="submit">Join</button></form></div>
+        <form class="newsletter" data-toast="Thanks — you're on the list."><label class="sr-only" for="nl">Email address</label><input id="nl" name="email" type="email" placeholder="Email address" required><button class="btn btn--primary btn--sm" type="submit">Join</button></form></div>
     </div>
     <div class="footer-bottom"><span>© ${new Date().getFullYear()} ${B.name}. Demo website — images from Unsplash.</span><span>Instagram · LinkedIn · Facebook</span></div>
   </div></footer>
@@ -152,8 +159,17 @@
       if (bad && ok) { inp.focus(); ok = false; }
     });
     if (!ok) return;
-    if (f.classList.contains('form')) { f.classList.add('is-sent'); f.querySelector('.form-success').focus(); }
-    else { toast(f.dataset.toast || 'Sent'); f.reset(); }
+    if (f.classList.contains('form')) {
+      const done = () => { f.classList.add('is-sent'); f.querySelector('.form-success').focus(); };
+      if (window.SITE_URLS && window.SITE_URLS.ajax) {
+        const fd = new FormData(f); fd.append('action', 'linden_enquiry'); fd.append('nonce', window.SITE_URLS.nonce); fd.append('page', location.href);
+        fetch(window.SITE_URLS.ajax, { method: 'POST', body: fd, credentials: 'same-origin' }).then(r => r.json()).then(r => r.success ? done() : toast('Sorry, please try again or call us.')).catch(() => toast('Sorry, please try again or call us.'));
+      } else done();
+    }
+    else {
+      if (window.SITE_URLS && window.SITE_URLS.ajax) { const fd = new FormData(f); fd.append('action', 'linden_enquiry'); fd.append('nonce', window.SITE_URLS.nonce); fd.append('kind', 'newsletter'); fetch(window.SITE_URLS.ajax, { method: 'POST', body: fd, credentials: 'same-origin' }); }
+      toast(f.dataset.toast || 'Sent'); f.reset();
+    }
   });
 
   // ---------- property card ----------
@@ -162,12 +178,12 @@
   const name = p => `${p.title} · ${p.id.toUpperCase()}`;
   const card = p => `
     <article class="card reveal ${p.status === 'Sold' ? 'is-sold' : ''}">
-      <div class="card__media"><img src="${IMG[p.images[0]](900)}" alt="${esc(p.title)} interior" loading="lazy" width="900" height="590"></div>
+      <div class="card__media"><img src="${imgSrc(p.images[0], 900)}" alt="${esc(p.title)} interior" loading="lazy" width="900" height="590"></div>
       <div class="card__top"><span class="badge ${statusCls(p.status)}">${p.status}</span>
         <button class="icon-btn fav" type="button" data-id="${p.id}" aria-pressed="${favs.has(p.id)}" aria-label="Save ${esc(name(p))}">${icon('heart')}</button></div>
       <div class="card__body">
         <span class="eyebrow">${subtitle(p)}</span>
-        <h3 class="card__title"><a href="property.html?id=${p.id}">${esc(name(p))}</a></h3>
+        <h3 class="card__title"><a href="${url('property', 'id=' + encodeURIComponent(p.id))}">${esc(name(p))}</a></h3>
         <p class="card__loc">${icon('pin')} ${B.address}</p>
         <div class="facts">${p.beds ? `<span>${icon('bed')}${p.beds} bed${p.beds > 1 ? 's' : ''}</span>` : p.type === 'Apartment' ? `<span>${icon('bed')}Studio</span>` : ''}<span>${icon('bath')}${p.baths} bath${p.baths > 1 ? 's' : ''}</span><span>${icon('area')}${p.area} m²</span><span>${icon('floor')}${p.floor ? 'Floor ' + p.floor : 'Ground'}</span></div>
         <div class="card__price"><span class="price">${p.status === 'Sold' ? 'Sold' : eur(p.price)}</span><small>€${Math.round(p.price / p.area).toLocaleString('en-US')} / m²</small></div>
@@ -206,7 +222,7 @@
     $('#hero-search').addEventListener('submit', e => {
       e.preventDefault(); const q = new URLSearchParams();
       for (const [k, v] of new FormData(e.target)) if (v) q.set(k, v);
-      location.href = 'properties.html?' + q;
+      location.href = url('properties', q.toString());
     }, true);
     $$('#types [data-from]').forEach(el => {
       const b = +el.dataset.beds, list = PROPS.filter(p => p.type !== 'Office' && p.type !== 'Retail' && (b === 4 ? p.beds >= 4 : p.beds === b));
@@ -229,7 +245,7 @@
       if (st.type) q.set('type', st.type); if (st.beds) q.set('beds', st.beds); if (st.min) q.set('min', st.min); if (st.max) q.set('max', st.max);
       if (st.size) q.set('size', st.size); if (st.wing) q.set('wing', st.wing); if (st.parking) q.set('parking', 1); if (st.park) q.set('park', 1);
       if (!st.hideSold) q.set('sold', 1); if (st.fav) q.set('fav', 1); if (st.sort !== 'recommended') q.set('sort', st.sort); if (st.view !== 'grid') q.set('view', st.view);
-      history.replaceState(null, '', 'properties.html' + (q.toString() ? '?' + q : ''));
+      history.replaceState(null, '', location.pathname + (q.toString() ? '?' + q : ''));
     };
     const ui = () => {
       $$('[data-f="type"]').forEach(c => c.setAttribute('aria-pressed', c.dataset.v === st.type));
@@ -295,8 +311,8 @@
     $('#p-ppm').textContent = `€${Math.round(p.price / p.area).toLocaleString('en-US')} per m² · VAT included`;
     $('#bar-price').textContent = $('#p-price').textContent; $('#bar-name').textContent = name(p);
     const main = $('#g-main');
-    const show = (k, btn) => { main.src = IMG[k](1600); main.alt = `${p.title} — photo`; $$('.gallery__thumbs button').forEach(b => b.setAttribute('aria-current', b === btn)); };
-    $('#g-thumbs').innerHTML = p.images.map((k, i) => `<button type="button" aria-label="Show photo ${i + 1}" aria-current="${i === 0}"><img src="${IMG[k](400)}" alt="" loading="lazy"></button>`).join('');
+    const show = (k, btn) => { main.src = imgSrc(k, 1600); main.alt = `${p.title} — photo`; $$('.gallery__thumbs button').forEach(b => b.setAttribute('aria-current', b === btn)); };
+    $('#g-thumbs').innerHTML = p.images.map((k, i) => `<button type="button" aria-label="Show photo ${i + 1}" aria-current="${i === 0}"><img src="${imgSrc(k, 400)}" alt="" loading="lazy"></button>`).join('');
     $$('#g-thumbs button').forEach((b, i) => b.addEventListener('click', () => show(p.images[i], b)));
     show(p.images[0], $('#g-thumbs button'));
     $('#g-badge').className = 'badge ' + statusCls(p.status); $('#g-badge').textContent = p.status;
@@ -308,7 +324,7 @@
     const dep = $('#c-dep'), yrs = $('#c-yrs'), out = $('#c-out'), rate = 0.045;
     const calc = () => { const loan = p.price * (1 - dep.value / 100), n = yrs.value * 12, r = rate / 12; const m = loan * r / (1 - Math.pow(1 + r, -n)); out.textContent = eur(Math.round(m)) + ' / month'; $('#c-dep-v').textContent = dep.value + '%'; $('#c-yrs-v').textContent = yrs.value + ' years'; };
     dep.addEventListener('input', calc); yrs.addEventListener('input', calc); calc();
-    const sim = PROPS.filter(x => x.id !== p.id && x.status !== 'Sold' && (x.type === p.type || Math.abs(x.price - p.price) < 120000)).slice(0, 3);
+    const sim = PROPS.filter(x => x.id !== p.id && x.status !== 'Sold').sort((a, b) => (a.type === p.type ? 0 : 1) - (b.type === p.type ? 0 : 1) || Math.abs(a.price - p.price) - Math.abs(b.price - p.price)).slice(0, 3);
     renderCards($('#similar'), sim);
     $('#fav-main').dataset.id = p.id; $('#fav-main').setAttribute('aria-pressed', favs.has(p.id));
     document.body.classList.add('has-sticky-bar');

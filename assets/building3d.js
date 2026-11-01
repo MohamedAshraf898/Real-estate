@@ -193,7 +193,7 @@ async function init() {
     tip.style.transform = `translate(${e.clientX - r.left + 16}px, ${e.clientY - r.top + 16}px)`;
   });
   canvas.addEventListener('pointerleave', () => { setHover(null); pointer.tx = pointer.ty = 0; });
-  canvas.addEventListener('click', () => { if (hovered) location.href = `properties.html?wing=${hovered.userData.wing}`; });
+  canvas.addEventListener('click', () => { if (hovered) location.href = window.siteUrl ? window.siteUrl('properties', 'wing=' + hovered.userData.wing) : `properties.html?wing=${hovered.userData.wing}`; });
 
   // wing chips: highlight a wing
   document.querySelectorAll('[data-wing]').forEach(btn => btn.addEventListener('click', () => {
@@ -201,7 +201,7 @@ async function init() {
     document.querySelectorAll('[data-wing]').forEach(b => b.setAttribute('aria-pressed', b.dataset.wing === focusWing));
     floorMeshes.forEach(m => { if (m !== hovered) m.material = m.userData.wing === focusWing ? M.wing : M.glass; });
     const link = document.querySelector('#b3d-link');
-    if (link) { link.href = focusWing ? `properties.html?wing=${focusWing}` : 'properties.html'; link.lastChild.textContent = focusWing ? ` Homes in wing ${focusWing}` : ' Browse all homes'; }
+    if (link) { link.href = window.siteUrl ? window.siteUrl('properties', focusWing ? 'wing=' + focusWing : '') : (focusWing ? `properties.html?wing=${focusWing}` : 'properties.html'); link.lastChild.textContent = focusWing ? ` Homes in wing ${focusWing}` : ' Browse all homes'; }
     if (gsap) { const g = wingGroups[id]; gsap.to(look, { x: focusWing ? g.position.x * 0.6 : 0, z: focusWing ? g.position.z * 0.6 : 0, duration: 1.2, ease: 'power3.inOut', onUpdate: () => { needs = true; } }); }
     needs = true;
   }));

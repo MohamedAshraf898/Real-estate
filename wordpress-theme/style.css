@@ -1,0 +1,20 @@
+/*
+Theme Name: Linden Residences
+Theme URI: https://mohamedashraf898.github.io/Real-estate/
+Author: Araby Brand
+Description: Real estate website theme — listings with filters, property pages, interactive 3D building, GSAP animations. Properties are managed under Properties in the dashboard.
+Version: 1.0.0
+Requires at least: 6.0
+Requires PHP: 7.4
+License: GPLv2 or later
+Text Domain: linden
+*/
+
+/* Most styles live in assets/site.css. These only adjust for WordPress chrome. */
+.admin-bar .site-header { top: calc(32px + var(--space-4)); }
+.admin-bar .mobile-menu, .admin-bar .pt { top: 32px; }
+@media (max-width: 782px) { .admin-bar .site-header { top: calc(46px + var(--space-4)); } .admin-bar .mobile-menu, .admin-bar .pt { top: 46px; } }
+.wp-content { max-width: 760px; }
+.wp-content > * + * { margin-top: 1em; }
+.wp-content h2, .wp-content h3 { margin-top: 1.6em; }
+.wp-content a { color: var(--color-text-accent); text-decoration: underline; }
