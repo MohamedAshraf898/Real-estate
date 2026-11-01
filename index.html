@@ -13,6 +13,7 @@
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/tokens.css">
 <link rel="stylesheet" href="assets/site.css">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
 </head>
 <body data-page="home">
 <div class="loader" aria-hidden="true"><div class="loader__inner">
@@ -76,6 +77,30 @@
     </div>
   </section>
 
+
+  <section class="b3d" id="explore-3d" aria-label="Explore the building in 3D">
+    <div class="b3d__stage">
+      <canvas aria-label="Interactive 3D model of the building. Hover a floor to see availability; click to browse homes."></canvas>
+      <img class="b3d__fallback" data-img="aerial:1800" alt="Aerial view of the residences and gardens" loading="lazy">
+      <div class="b3d__tip" hidden></div>
+    </div>
+    <div class="wrap b3d__wrap">
+      <div class="b3d__panel">
+        <span class="eyebrow">Explore in 3D</span>
+        <h2 class="h3">Pick a floor. See what's available.</h2>
+        <p class="b3d__hint">Hover a floor to check availability, click to see its homes. Scroll to fly around the building.</p>
+        <div class="chips" role="group" aria-label="Highlight a wing">
+          <button class="chip" type="button" data-wing="A" aria-pressed="false">Wing A</button>
+          <button class="chip" type="button" data-wing="B" aria-pressed="false">Wing B</button>
+          <button class="chip" type="button" data-wing="V" aria-pressed="false">Wing V</button>
+        </div>
+        <label class="b3d__time"><span>Time of day <output id="b3d-hour-out">10:00</output></span>
+          <input type="range" id="b3d-hour" min="6" max="21" step="0.5" value="10"></label>
+        <a class="btn btn--primary btn--sm" id="b3d-link" href="properties.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M21 8l-9-5-9 5v8l9 5 9-5V8z"/><path d="m3 8 9 5 9-5M12 13v8"/></svg> Browse all homes</a>
+      </div>
+    </div>
+  </section>
+
   <section class="section section--dark">
     <div class="wrap grid-2">
       <div class="stack reveal">
@@ -131,7 +156,11 @@
     </div>
   </section>
 </main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="assets/motion.js"></script>
 <script src="assets/data.js"></script>
 <script src="assets/main.js"></script>
+<script type="module" src="assets/building3d.js"></script>
 </body>
 </html>

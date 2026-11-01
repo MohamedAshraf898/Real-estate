@@ -76,7 +76,9 @@
 
   // loader (home only): counts up while hero image loads, max ~1.4s
   const loader = $('.loader');
-  if (loader) {
+  const M = window.Motion;
+  if (loader && M) M.loader(loader);
+  else if (loader) {
     const pct = $('.loader__pct', loader), bar = $('.loader__bar span', loader);
     let n = 0; const t0 = performance.now();
     const tick = () => { const p = Math.min(100, Math.round((performance.now() - t0) / 12)); if (p !== n) { n = p; pct.textContent = n + '%'; bar.style.width = n + '%'; } if (n < 100) requestAnimationFrame(tick); else document.documentElement.classList.add('loaded'); };
@@ -99,7 +101,7 @@
 
   // reveal on scroll
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
-  const observe = root => $$('.reveal, .reveal-img, .plan', root || document).forEach(el => io.observe(el));
+  const observe = root => { const els = $$('.reveal, .reveal-img, .plan', root || document); if (M) M.reveal(els); else els.forEach(el => io.observe(el)); };
 
   // simple forms (newsletter, contact, enquiry)
   document.addEventListener('submit', e => {
@@ -275,4 +277,6 @@
   }
 
   observe();
+  if (M) M.start();
+  document.dispatchEvent(new CustomEvent('site:ready'));
 })();

@@ -357,3 +357,36 @@ p { margin: 0; }
   .vt-label { display: none; }
   .toolbar .select { flex: 1; min-width: 0; }
 }
+
+/* ---------- GSAP motion ---------- */
+.w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .1em; margin-bottom: -.1em; }
+.w > span { display: inline-block; will-change: transform; }
+.gsap .reveal, .gsap .reveal-img img { transition: none; }
+.gsap .reveal-img img { transform: none; }
+.gsap .loader { transition: none; }
+.gsap .hero__media img { animation: none; transform: none; }
+.hero__media { will-change: transform; }
+
+/* ---------- 3D building ---------- */
+.b3d { position: relative; height: 100svh; min-height: 640px; overflow: hidden; background: #EEF0E4; }
+.b3d__stage { position: absolute; inset: 0; }
+.b3d__stage canvas { display: block; width: 100%; height: 100%; touch-action: pan-y; opacity: 0; transition: opacity .8s; }
+.b3d__stage.is-ready canvas { opacity: 1; }
+.b3d__fallback { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: none; }
+.b3d__stage.is-fallback .b3d__fallback { display: block; }
+.b3d__stage.is-fallback canvas { display: none; }
+.b3d__tip { position: absolute; left: 0; top: 0; z-index: 3; display: grid; gap: 2px; padding: 10px 14px; border-radius: var(--radius-md); background: var(--forest-900); color: var(--cream-100); font-size: .8125rem; pointer-events: none; box-shadow: var(--shadow-md); white-space: nowrap; }
+.b3d__tip b { font-weight: 600; }
+.b3d__tip span { color: var(--lime-400); }
+.b3d__tip small { color: var(--sand-400); font-size: .6875rem; }
+.b3d__wrap { position: relative; height: 100%; display: flex; align-items: flex-end; pointer-events: none; padding-bottom: var(--space-8); }
+.b3d__panel { pointer-events: auto; display: grid; gap: var(--space-4); width: min(420px, 100%); padding: var(--space-6); border-radius: var(--radius-xl); background: rgba(253, 251, 239, .82); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); box-shadow: var(--shadow-lg); }
+.b3d__hint { font-size: .875rem; color: var(--color-text-secondary); }
+.b3d__time { display: grid; gap: var(--space-2); font: 500 .875rem/1.3 var(--font-body); }
+.b3d__time span { display: flex; justify-content: space-between; }
+.b3d__time output { font-family: var(--font-heading); font-size: 1.125rem; color: var(--color-text-accent); }
+.b3d__time input { width: 100%; accent-color: var(--forest-900); }
+.b3d__panel .btn { justify-self: start; }
+@media (max-width: 699px) { .b3d { height: 92svh; } .b3d__panel { padding: var(--space-4); gap: var(--space-3); } .b3d__hint { display: none; } .b3d__wrap { padding-bottom: var(--space-4); } }
+
+html, body { overflow-x: clip; }
